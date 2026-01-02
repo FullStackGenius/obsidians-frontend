@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata ,Viewport } from 'next';
 import "./adminlte.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Source_Sans_3 } from 'next/font/google';
+
 export const metadata: Metadata = {
   title: 'AdminLTE v4 | Dashboard',
 
@@ -19,22 +20,23 @@ export const metadata: Metadata = {
     'accessible admin panel',
   ],
 
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    userScalable: true,
+  other: {
+    'color-scheme': 'light dark',
+    'supported-color-schemes': 'light dark',
   },
+}
+
+// ✅ Viewport export
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  userScalable: true,
 
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#007bff' },
     { media: '(prefers-color-scheme: dark)', color: '#1a1a1a' },
   ],
-
-  other: {
-    'color-scheme': 'light dark',
-    'supported-color-schemes': 'light dark',
-  },
-};
+}
 export const adminFont = Source_Sans_3({
   subsets: ['latin'],
   weight: ['400', '600', '700'],

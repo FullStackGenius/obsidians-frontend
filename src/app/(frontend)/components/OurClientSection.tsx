@@ -238,6 +238,62 @@ const OurClientSection = () => {
                     </div>
                 </div>
             )}
+
+              <div id="videoModal" style={{
+        display: 'none',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'rgba(0,0,0,0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <div className="modal-content" style={{
+          position: 'relative',
+          maxWidth: '800px',
+          width: '90%',
+        }}>
+          <span className="video-close" style={{
+            position: 'absolute',
+            top: '10px',
+            right: '20px',
+            cursor: 'pointer',
+            color: 'white',
+            fontSize: '30px',
+            zIndex: 9,
+          }}>&times;</span>
+          {/* <iframe id="popupIframe" style="width:100%; height:450px; display:none;" frameborder="0" allowfullscreen></iframe>
+          <video id="popupVideo" style="width:100%; display:none; max-height: 500px;" controls>
+            <source src="" type="video/mp4">
+          </video> */}
+          <iframe
+            id="popupIframe"
+            style={{
+              width: '100%',
+              height: '450px',
+              display: 'none',
+              border: 'none',
+            }}
+
+            allowFullScreen
+          ></iframe>
+
+          <video
+            id="popupVideo"
+            style={{
+              width: '100%',
+              display: 'none',
+              maxHeight: '500px',
+            }}
+            controls
+          >
+            {/* <source src="" type="video/mp4" /> */}
+          </video>
+
+        </div>
+      </div>
         </>
     )
 }

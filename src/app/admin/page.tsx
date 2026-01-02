@@ -1,6 +1,19 @@
-import React from "react";
+"use client"
+ import React from "react";
 
+import { loginAction } from './actions'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 const page = () => {
+const initialState = { success: false, message: '' }
+   const [state, formAction] = React.useActionState(loginAction, initialState)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state.success) router.push('/admin/dashboard')
+  }, [state.success, router])
+
+
   return (
     <>
      <div className="login-page bg-body-secondary">
@@ -18,7 +31,7 @@ const page = () => {
           </div>
           <div className="card-body login-card-body">
             <p className="login-box-msg">Sign in to start your session</p>
-            <form action="../index3.html" method="post">
+            <form action={formAction}>
               <div className="input-group mb-1">
                 <div className="form-floating">
                   <input
@@ -26,6 +39,7 @@ const page = () => {
                     type="email"
                     className="form-control"
                     placeholder=""
+                      name="email"
                   />
                   <label htmlFor="loginEmail">Email</label>
                 </div>
@@ -40,6 +54,7 @@ const page = () => {
                     type="password"
                     className="form-control"
                     placeholder=""
+                    name="password"
                   />
                   <label htmlFor="loginPassword">Password</label>
                 </div>
