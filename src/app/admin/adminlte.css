@@ -4260,6 +4260,7 @@ textarea.form-control-lg {
 }
 .navbar-expand .navbar-nav .dropdown-menu {
   position: absolute;
+  right: 0;
 }
 .navbar-expand .navbar-nav .nav-link {
   padding-right: var(--bs-navbar-nav-link-padding-x);

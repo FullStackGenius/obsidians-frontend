@@ -4,14 +4,31 @@
 import { loginAction } from './actions'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { useDispatch } from "react-redux"
+import { loginSuccess } from "../../lib/redux/features/authSlice"
 const page = () => {
-const initialState = { success: false, message: '' }
-   const [state, formAction] = React.useActionState(loginAction, initialState)
+// const initialState = { success: false, message: '' }
+//    const [state, formAction] = React.useActionState(loginAction, initialState)
+//   const router = useRouter()
+
+//   useEffect(() => {
+//     if (state.success) router.push('/admin/dashboard')
+//   }, [state.success, router])
+ const initialState = { success: false, message: "", user: null }
+  const [state, formAction] = React.useActionState(loginAction, initialState)
+
   const router = useRouter()
+  const dispatch = useDispatch() // ✅ Redux dispatch
 
   useEffect(() => {
-    if (state.success) router.push('/admin/dashboard')
-  }, [state.success, router])
+    if (state.success && state.user) {
+      // ✅ UPDATE REDUX HERE
+      dispatch(loginSuccess(state.user))
+
+      // ✅ REDIRECT
+      router.push("/admin/dashboard")
+    }
+  }, [state.success, state.user, dispatch, router])
 
 
   return (

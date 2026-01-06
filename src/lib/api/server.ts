@@ -28,7 +28,9 @@ export async function apiServer<T>(
   let token = options.token;
 
   if (options.useAuth !== false) {
-    token = token ?? cookies().get('auth_token')?.value;
+     const cookieStore = await cookies(); // 🔥 await required
+  const tokens = cookieStore.get("access_token")?.value;
+    token = token ?? tokens;
   }
 
   if (token) {

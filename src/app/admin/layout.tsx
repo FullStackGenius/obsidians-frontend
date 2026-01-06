@@ -2,7 +2,8 @@ import type { Metadata ,Viewport } from 'next';
 import "./adminlte.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Source_Sans_3 } from 'next/font/google';
-
+import { Providers } from '../admin/components/Providers'
+import AuthProvider from "../../lib/providers/AuthProvider"
 export const metadata: Metadata = {
   title: 'AdminLTE v4 | Dashboard',
 
@@ -48,7 +49,7 @@ export default function RootLayout({ children }) {
   return (
     <>
     <div className={`admin-layout ${adminFont.variable}`}>
-      {children}
+      <Providers><AuthProvider>{children}</AuthProvider></Providers>
       </div>
     </>
   );
