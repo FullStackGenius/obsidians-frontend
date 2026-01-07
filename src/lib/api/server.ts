@@ -1,78 +1,90 @@
-// src/lib/api/server.ts
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 interface ApiOptions extends RequestInit {
-  token?: string;           // optional override
-  useAuth?: boolean;        // default: true on server
+  token?: string; // optional manual token
+  useAuth?: boolean; // default: true
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:2001';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:2001";
 
 export async function apiServer<T>(
   endpoint: string,
-  method: HttpMethod = 'GET',
+  method: HttpMethod = "GET",
   body?: any,
   options: ApiOptions = {}
 ): Promise<T> {
-  const url = `${BASE_URL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
+  const url = `${BASE_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
 
+  // 🔹 Read cookies from Next.js request
+  const cookieStore = await cookies();
+  const authToken = cookieStore.get("auth_token")?.value;
+
+  // 🔹 Build headers (use Headers object)
   const headers = new Headers({
-    'Accept': 'application/json',
-    ...(body && !(body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
+    Accept: "application/json",
+    ...(body && !(body instanceof FormData)
+      ? { "Content-Type": "application/json" }
+      : {}),
     ...options.headers,
   });
 
-  // 1. Try to get token automatically (Server Components are safe)
-  let token = options.token;
-
-  if (options.useAuth !== false) {
-     const cookieStore = await cookies(); // 🔥 await required
-  const tokens = cookieStore.get("access_token")?.value;
-    token = token ?? tokens;
+  // 🔹 Attach Authorization header (default ON)
+  if (options.useAuth !== false && authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
   }
 
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-
+  // 🔹 Build request config
   const config: RequestInit = {
     method,
     headers,
-    ...options,
     ...(body && !(body instanceof FormData)
       ? { body: JSON.stringify(body) }
-      : { body }), // FormData goes as-is
+      : body instanceof FormData
+      ? { body }
+      : {}),
   };
 
+  // 🔹 Debug safely (no confusion)
+  console.log("REQUEST →", {
+    url,
+    method,
+    headers: Object.fromEntries(headers.entries()),
+  });
+  console.log(config);
   const response = await fetch(url, config);
 
   if (!response.ok) {
-    let errorMessage = response.statusText;
+    let message = response.statusText;
     try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorMessage;
+      const err = await response.json();
+      message = err.message || message;
     } catch {}
-    
-    throw new Error(`API Error ${response.status}: ${errorMessage}`);
+    throw new Error(`API Error ${response.status}: ${message}`);
   }
 
-  // Handle empty responses (204, DELETE, etc)
   if (response.status === 204) return {} as T;
 
-  return response.json() as Promise<T>;
+  return (await response.json()) as T;
 }
 
-// Convenience wrappers
-export const get = <T>(endpoint: string, opts: ApiOptions = {}) =>
-  apiServer<T>(endpoint, 'GET', undefined, opts);
+/* ===============================
+   Convenience helpers
+================================ */
 
-export const post = <T>(endpoint: string, body?: any, opts: ApiOptions = {}) =>
-  apiServer<T>(endpoint, 'POST', body, opts);
+export const get = <T>(endpoint: string, opts?: ApiOptions) =>
+  apiServer<T>(endpoint, "GET", undefined, opts);
 
-export const postForm = <T>(endpoint: string, formData: FormData, opts: ApiOptions = {}) =>
-  apiServer<T>(endpoint, 'POST', formData, {
+export const post = <T>(endpoint: string, body?: any, opts?: ApiOptions) =>
+  apiServer<T>(endpoint, "POST", body, opts);
+
+export const postForm = <T>(
+  endpoint: string,
+  formData: FormData,
+  opts?: ApiOptions
+) =>
+  apiServer<T>(endpoint, "POST", formData, {
     ...opts,
-    headers: { ...opts.headers }, // don't set Content-Type for FormData
   });

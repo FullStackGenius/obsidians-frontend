@@ -5,6 +5,7 @@ import type { NextRequest } from 'next/server'
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get('auth_token')?.value
+ 
 
   // 🔒 Protect admin dashboard + subroutes
   if (!token && pathname.startsWith('/admin/dashboard')) {

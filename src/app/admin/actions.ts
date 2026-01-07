@@ -23,7 +23,7 @@ export async function loginAction(prevState: any, formData: FormData) {
       { email, password },
       { useAuth: false }
     );
-
+console.log(res)
     
     const cookieStore = await cookies();
 

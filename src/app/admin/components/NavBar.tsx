@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useRouter } from "next/navigation"
 import type { RootState } from "../../../lib/redux/store"
 import { logout } from "../../../lib/redux/features/authSlice"
+import Link from 'next/link'
 
 const NavBar = () => {
    const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ const NavBar = () => {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   )
-  console.log(user, isAuthenticated)
+  // console.log(user, isAuthenticated)
 
   if (!isAuthenticated || !user) return null
 
@@ -204,7 +205,7 @@ const NavBar = () => {
                   </p>
                 </li>
               
-                <li className="user-body">
+                {/* <li className="user-body">
                  
                   <div className="row">
                     <div className="col-4 text-center"><a href="#">Followers</a></div>
@@ -212,10 +213,10 @@ const NavBar = () => {
                     <div className="col-4 text-center"><a href="#">Friends</a></div>
                   </div>
                  
-                </li>
+                </li> */}
                
                 <li className="user-footer">
-                  <a href="#" className="btn btn-default btn-flat">Profile</a>
+                  <Link href="/admin/profile" className="btn btn-default btn-flat">Profile</Link>
                   <a href="#" className="btn btn-default btn-flat float-end"  onClick={handleLogout}>Sign out</a>
                 </li>
                 

@@ -64,7 +64,7 @@ export function useAuthInit() {
       try {
         const response = await getClient<ProfileResponse>("/api/user/profile")
 
-        console.log(response.data.user)
+        // console.log(response.data.user)
 
         // ✅ dispatch only the user object
         dispatch(loginSuccess(response.data.user))

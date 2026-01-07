@@ -1,12 +1,13 @@
 import React from 'react'
 import Image from 'next/image';
+import Link from 'next/link';
 const SideBar = () => {
   return (
     <aside className="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
 
       <div className="sidebar-brand">
 
-        <a href="./index.html" className="brand-link">
+        <Link href="/admin/dashboard" className="brand-link">
           <Image
             src="/assets/img/AdminLTELogo.png"
             alt="AdminLTE Logo"
@@ -18,7 +19,7 @@ const SideBar = () => {
 
           <span className="brand-text fw-light">AdminLTE 4</span>
 
-        </a>
+        </Link>
 
       </div>
 
@@ -33,7 +34,13 @@ const SideBar = () => {
             data-accordion="false"
             id="navigation"
           >
-            <li className="nav-item menu-open">
+             <li className="nav-item">
+              <Link href="/admin/dashboard" className="nav-link">
+                 <i className="nav-icon bi bi-speedometer"></i>
+                <p>Dashboard</p>
+              </Link>
+            </li>
+            {/* <li className="nav-item menu-open">
               <a href="#" className="nav-link active">
                 <i className="nav-icon bi bi-speedometer"></i>
                 <p>
@@ -462,7 +469,7 @@ const SideBar = () => {
                 <i className="nav-icon bi bi-circle text-info"></i>
                 <p>Informational</p>
               </a>
-            </li>
+            </li> */}
           </ul>
 
         </nav>
