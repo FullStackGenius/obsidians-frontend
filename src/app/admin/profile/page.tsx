@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState, useActionState, useTransition } from "react";
-import NavBar from "../components/NavBar";
-import SideBar from "../components/SideBar";
 import clientFetch from "../../../lib/api/clientFetch";
 import profileAction from "./profile.action";
+import MainAppContentHeader from "../components/MainAppContentHeader";
+import AdminLayout from "../components/AdminLayout";
 
 type User = {
   _id: string;
@@ -85,157 +85,137 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
-      <div className="app-wrapper">
-        <NavBar />
-        <SideBar />
-        <main className="app-main">
-          <div className="app-content-header">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-sm-6">
-                  <h3 className="mb-0">Profile</h3>
-                </div>
-                <div className="col-sm-6">
-                  <ol className="breadcrumb float-sm-end">
-                    <li className="breadcrumb-item"><a href="#">Home</a></li>
-                    <li className="breadcrumb-item active">Profile</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
+    <AdminLayout>
 
-          <div className="app-content">
-            <div className="container-fluid">
-              <div className="row g-4">
-                <div className="col-md-12">
-                  <div className="card card-primary card-outline mb-4">
-                    <div className="card-header">
-                      <div className="card-title">Update Profile</div>
-                    </div>
+      <MainAppContentHeader
+        title=" Profile Section"
+        breadcrumbs={[
+          { label: 'Home', href: '/admin' },
+          { label: 'Profile', href: '/admin/profile' },
 
-                    <div className="card-body">
-                      {/* Current / Preview Image */}
-                      <div className="text-center mb-4">
-                        {previewImage ? (
-                          <img
-                            src={previewImage}
-                            alt="Profile preview"
-                            className="rounded-circle"
-                            style={{
-                              width: "140px",
-                              height: "140px",
-                              objectFit: "cover",
-                              border: "4px solid #fff",
-                              boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-                            }}
-                          />
-                        ) : (
-                          <div
-                            className="rounded-circle bg-secondary d-flex align-items-center justify-content-center"
-                            style={{ width: "140px", height: "140px", margin: "0 auto" }}
-                          >
-                            <span className="text-white fs-1">No Image</span>
-                          </div>
-                        )}
+        ]}
+      />
+      <div className="app-content">
+        <div className="container-fluid">
+          <div className="row g-4">
+            <div className="col-md-12">
+              <div className="card card-primary card-outline mb-4">
+                <div className="card-header">
+                  <div className="card-title">Update Profile</div>
+                </div>
+
+                <div className="card-body">
+                  {/* Current / Preview Image */}
+                  <div className="text-center mb-4">
+                    {previewImage ? (
+                      <img
+                        src={previewImage}
+                        alt="Profile preview"
+                        className="rounded-circle"
+                        style={{
+                          width: "140px",
+                          height: "140px",
+                          objectFit: "cover",
+                          border: "4px solid #fff",
+                          boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="rounded-circle bg-secondary d-flex align-items-center justify-content-center"
+                        style={{ width: "140px", height: "140px", margin: "0 auto" }}
+                      >
+                        <span className="text-white fs-1">No Image</span>
                       </div>
-
-                      <form action={formAction}>
-                        <div className="mb-3">
-                          <label htmlFor="firstName" className="form-label">
-                            First name
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="firstName"
-                            defaultValue={user?.firstName || ""}
-                            required
-                          />
-                        </div>
-
-                        <div className="mb-3">
-                          <label htmlFor="lastName" className="form-label">
-                            Last name
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="lastName"
-                            defaultValue={user?.lastName || ""}
-                            required
-                          />
-                        </div>
-
-                        <div className="mb-3">
-                          <label htmlFor="email" className="form-label">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            name="email"
-                            defaultValue={user?.email || ""}
-                            required
-                          />
-                        </div>
-
-                        <div className="mb-4">
-                          <label htmlFor="profileImage" className="form-label">
-                            Profile Image
-                          </label>
-                          <input
-                            type="file"
-                            className="form-control"
-                            name="profileImage"
-                            id="profileImage"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                          />
-                        </div>
-
-                        <div className="card-footer">
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            disabled={isPending || isPendingTransition}
-                          >
-                            {isPending || isPendingTransition ? "Saving..." : "Update Profile"}
-                          </button>
-                        </div>
-
-                        {/* Feedback messages */}
-                        {state?.success && (
-                          <div className="alert alert-success mt-3">
-                            {state.message || "Profile updated successfully!"}
-                          </div>
-                        )}
-
-                        {state?.errors && (
-                          <div className="alert alert-danger mt-3">
-                            {state.errors.map((err, i) => (
-                              <div key={i}>{err}</div>
-                            ))}
-                          </div>
-                        )}
-                      </form>
-                    </div>
+                    )}
                   </div>
+
+                  <form action={formAction}>
+                    <div className="mb-3">
+                      <label htmlFor="firstName" className="form-label">
+                        First name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="firstName"
+                        defaultValue={user?.firstName || ""}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="lastName" className="form-label">
+                        Last name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="lastName"
+                        defaultValue={user?.lastName || ""}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        defaultValue={user?.email || ""}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <label htmlFor="profileImage" className="form-label">
+                        Profile Image
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        name="profileImage"
+                        id="profileImage"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+
+                    <div className="card-footer">
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={isPending || isPendingTransition}
+                      >
+                        {isPending || isPendingTransition ? "Saving..." : "Update Profile"}
+                      </button>
+                    </div>
+
+                    {/* Feedback messages */}
+                    {state?.success && (
+                      <div className="alert alert-success mt-3">
+                        {state.message || "Profile updated successfully!"}
+                      </div>
+                    )}
+
+                    {state?.errors && (
+                      <div className="alert alert-danger mt-3">
+                        {state.errors.map((err, i) => (
+                          <div key={i}>{err}</div>
+                        ))}
+                      </div>
+                    )}
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </main>
-
-        <footer className="app-footer">
-          <div className="float-end d-none d-sm-inline">Anything you want</div>
-          <strong>
-            Copyright © 2014-{new Date().getFullYear()} <a href="https://adminlte.io">AdminLTE.io</a>.
-          </strong>{" "}
-          All rights reserved.
-        </footer>
+        </div>
       </div>
-    </div>
+    </AdminLayout>
+
   );
 }

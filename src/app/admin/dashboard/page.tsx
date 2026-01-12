@@ -1,45 +1,27 @@
-import React from 'react'
-import SideBar from '../components/SideBar'
-import NavBar from '../components/NavBar'
+import MainAppContentHeader from '../components/MainAppContentHeader'
+import AdminLayout from '../components/AdminLayout'
 
 const page = () => {
   return (
     <>
-    <div className="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
-    <div className="app-wrapper">
-    
-    <NavBar/>
-     
-      <SideBar/>
-     
-      <main className="app-main">
-       
-        <div className="app-content-header">
-        
-          <div className="container-fluid">
-           
-            <div className="row">
-              <div className="col-sm-6"><h3 className="mb-0">Dashboard</h3></div>
-              <div className="col-sm-6">
-                <ol className="breadcrumb float-sm-end">
-                  <li className="breadcrumb-item"><a href="#">Home</a></li>
-                  <li className="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-              </div>
-            </div>
-           
-          </div>
-         
-        </div>
-       
+      <AdminLayout>
+        <MainAppContentHeader
+          title=" Profile Section"
+          breadcrumbs={[
+            { label: 'Home', href: '/admin/dashboard' },
+            { label: 'Dashboard', href: '/admin/dashboard' },
+
+          ]}
+        />
+
         <div className="app-content">
-        
+
           <div className="container-fluid">
-           
+
             <div className="row">
-             
+
               <div className="col-lg-3 col-6">
-              
+
                 <div className="small-box text-bg-primary">
                   <div className="inner">
                     <h3>150</h3>
@@ -63,11 +45,11 @@ const page = () => {
                     More info <i className="bi bi-link-45deg"></i>
                   </a>
                 </div>
-                
+
               </div>
-            
+
               <div className="col-lg-3 col-6">
-               
+
                 <div className="small-box text-bg-success">
                   <div className="inner">
                     <h3>53<sup className="fs-5">%</sup></h3>
@@ -91,11 +73,11 @@ const page = () => {
                     More info <i className="bi bi-link-45deg"></i>
                   </a>
                 </div>
-               
+
               </div>
-              
+
               <div className="col-lg-3 col-6">
-                
+
                 <div className="small-box text-bg-warning">
                   <div className="inner">
                     <h3>44</h3>
@@ -119,17 +101,17 @@ const page = () => {
                     More info <i className="bi bi-link-45deg"></i>
                   </a>
                 </div>
-               
+
               </div>
-             
+
               <div className="col-lg-3 col-6">
-               
+
                 <div className="small-box text-bg-danger">
                   <div className="inner">
                     <h3>65</h3>
                     <p>Unique Visitors</p>
                   </div>
-                  {/* <svg
+                  <svg
                     className="small-box-icon"
                     fill="currentColor"
                     viewBox="0 0 24 24"
@@ -137,16 +119,16 @@ const page = () => {
                     aria-hidden="true"
                   >
                     <path
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
+                      clipRule="evenodd"
+                      fillRule="evenodd"
                       d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"
                     ></path>
                     <path
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
+                      clipRule="evenodd"
+                      fillRule="evenodd"
                       d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z"
                     ></path>
-                  </svg> */}
+                  </svg>
                   <a
                     href="#"
                     className="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
@@ -154,33 +136,18 @@ const page = () => {
                     More info <i className="bi bi-link-45deg"></i>
                   </a>
                 </div>
-               
+
               </div>
-              
+
             </div>
-           
-           
-          
+
+
+
           </div>
-        
+
         </div>
-       
-      </main>
-      
-      <footer className="app-footer">
-        
-        <div className="float-end d-none d-sm-inline">Anything you want</div>
-       
-        <strong>
-          Copyright &copy; 2014-2025&nbsp;
-          <a href="https://adminlte.io" className="text-decoration-none">AdminLTE.io</a>.
-        </strong>
-        All rights reserved.
-        
-      </footer>
-     
-    </div>
-    </div>
+      </AdminLayout>
+
     </>
   )
 }
