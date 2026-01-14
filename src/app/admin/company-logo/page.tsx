@@ -3,7 +3,7 @@ import MainAppContentHeader from '../components/MainAppContentHeader'
 import AdminLayout from '../components/AdminLayout'
 import companyLogoAction from "./company-logo.action";
 import { useActionState, useEffect, useState } from 'react';
-import clientFetch from '../../../lib/api/newClientFetch';
+import clientFetch from '../../../lib/api/clientFetch';
 
 
 
@@ -37,24 +37,36 @@ const initialState: ActionState = {
 };
 const CompanyLogo = () => {
   const [state, formAction, isPending] = useActionState(companyLogoAction, initialState);
-  const[getLogo,setLogo] =useState<any>([]);
+  const [getLogo, setLogo] = useState<any>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     const getProfileData = async () => {
       try {
         const response = await clientFetch<LogoResponse>("/api/company-logo/all-logos");
-        console.log(response)
-         setLogo(response.data.logo);
-        // // Set initial preview from current profile image
-        // if (response.data.user.profileImage) {
-        //   setPreviewImage(response.data.user.profileImage);
-        // }
+        setLogo(response.data.logo);
       } catch (err) {
         console.error("Failed to load profile:", err);
       }
     };
     getProfileData();
   }, [isPending]);
+
+  const handleDelete = async (logoId: string) => {
+    if (!confirm("Are you sure you want to delete this logo?")) return;
+    const previousLogos = [...getLogo];
+    setLogo(getLogo.filter((logo: any) => logo._id !== logoId));
+    try {
+      await clientFetch(`/api/company-logo/delete/${logoId}`, {
+        method: "DELETE",
+      });
+      // Success!
+      // alert("Logo deleted");
+      // router.refresh() or mutate swr/tanstack query
+    } catch (err: any) {
+      setLogo(previousLogos);
+      alert(err?.message || "Could not delete logo");
+    }
+  };
 
   return (
     <>
@@ -91,25 +103,25 @@ const CompanyLogo = () => {
               </div>
             </div>
 
-              <div className="row g-4">
-            <div className="col-md-12">
-              <div className="card mb-12">
-                <div className="card-header">
-                  <h3 className="card-title">All Company Logos</h3>
-                </div>
+            <div className="row g-4">
+              <div className="col-md-12">
+                <div className="card mb-12">
+                  <div className="card-header">
+                    <h3 className="card-title">All Company Logos</h3>
+                  </div>
 
-                <div className="card-body">
-                  <table className="table table-bordered" role="table">
-                    <thead>
-                      <tr>
-                        <th style={{ "width": "10px" }} scope="col">#</th>
-                        <th scope="col">Company Logo Image</th>
-                        {/* <th scope="col">Progress</th> */}
-                        <th  scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* <tr className="align-middle">
+                  <div className="card-body">
+                    <table className="table table-bordered" role="table">
+                      <thead>
+                        <tr>
+                          <th style={{ "width": "10px" }} scope="col">#</th>
+                          <th scope="col">Company Logo Image</th>
+                          {/* <th scope="col">Progress</th> */}
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* <tr className="align-middle">
                         <td>1.</td>
                         <td>Update software</td>
                         <td>
@@ -149,22 +161,22 @@ const CompanyLogo = () => {
                         </td>
                         <td><span className="badge text-bg-success">90%</span></td>
                       </tr> */}
-                      {getLogo.map((logo, index) => {
-    
+                        {getLogo.map((logo, index) => {
 
-    return (
-      <tr className="align-middle" key={logo._id}>
-        <td>{index + 1}.</td>
 
-        <td>
-          <img
-            src={logo.companyLogoImage}
-            alt="Company Logo"
-            style={{ width:"200px" ,height: "200px" }}
-          />
-        </td>
+                          return (
+                            <tr className="align-middle" key={logo._id}>
+                              <td>{index + 1}.</td>
 
-        {/* <td>
+                              <td>
+                                <img
+                                  src={logo.companyLogoImage}
+                                  alt="Company Logo"
+                                  style={{ width: "200px", height: "200px" }}
+                                />
+                              </td>
+
+                              {/* <td>
           <div className="progress progress-xs">
             <div
               className={`progress-bar ${
@@ -177,41 +189,41 @@ const CompanyLogo = () => {
           </div>
         </td> */}
 
-        <td>
-          {/* <span
+                              <td>
+                                {/* <span
             className={`badge ${
               logo.status ? "text-bg-success" : "text-bg-danger"
             }`}
           >Delete
             {progress}%
           </span> */}
-          <button className='btn btn-danger'>Delete</button>
-        </td>
-      </tr>
-    );
-  })}
-                    </tbody>
-                  </table>
+                                <button className='btn btn-danger' onClick={() => handleDelete(logo._id)}>Delete</button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="card-footer clearfix">
+                    <ul className="pagination pagination-sm m-0 float-end">
+                      <li className="page-item"><a className="page-link" href="#">«</a></li>
+                      <li className="page-item"><a className="page-link" href="#">1</a></li>
+                      <li className="page-item"><a className="page-link" href="#">2</a></li>
+                      <li className="page-item"><a className="page-link" href="#">3</a></li>
+                      <li className="page-item"><a className="page-link" href="#">»</a></li>
+                    </ul>
+                  </div>
                 </div>
 
-                <div className="card-footer clearfix">
-                  <ul className="pagination pagination-sm m-0 float-end">
-                    <li className="page-item"><a className="page-link" href="#">«</a></li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item"><a className="page-link" href="#">»</a></li>
-                  </ul>
-                </div>
+
+
               </div>
 
 
 
             </div>
-
-
-
-          </div>
           </div>
         </div>
       </AdminLayout>

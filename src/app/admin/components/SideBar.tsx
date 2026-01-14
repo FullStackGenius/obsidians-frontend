@@ -46,6 +46,12 @@ const SideBar = () => {
                 <p>Company Logos</p>
               </Link>
             </li>
+              <li className="nav-item">
+              <Link href="/admin/testimonial" className="nav-link">
+                 <i className="nav-icon bi bi-speedometer"></i>
+                <p>Testimonial</p>
+              </Link>
+            </li>
             {/* <li className="nav-item menu-open">
               <a href="#" className="nav-link active">
                 <i className="nav-icon bi bi-speedometer"></i>
