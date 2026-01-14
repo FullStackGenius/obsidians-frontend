@@ -6,7 +6,7 @@ import testimonialAction from './testimonial.action';
 import clientFetch from '../../../lib/api/clientFetch';
 
 type Testimonials = {
-  id: string;
+  _id: string;
   clientName: string,
   description: string,
   desination: string,
@@ -17,22 +17,22 @@ type Testimonials = {
   updatedAt: string
 
 }
-type ActionState = {
-  success?: boolean;
-  message?: string;
-  errors?: string[];
-  testimonials?: Testimonials;
-};
+// type ActionState = {
+//   success?: boolean;
+//   message?: string;
+//   errors?: string[];
+//   testimonials?: Testimonials;
+// };
 
 
 
 const page = () => {
-  const initialState: ActionState = {
-    success: undefined,
-    message: undefined,
-    errors: undefined,
-    testimonials: undefined,
-  };
+  // const initialState: ActionState = {
+  //   success: undefined,
+  //   message: undefined,
+  //   errors: undefined,
+  //   testimonials: undefined,
+  // };
   const [state, formAction, isPending] = useActionState(testimonialAction, {
     errors: {},
   });

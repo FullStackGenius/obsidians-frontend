@@ -73,6 +73,27 @@ const testimonialSchema = z.object({
     // .optional() ← remove .optional() if video is required
 });
 
+type Testimonial = {
+_id: string,
+    clientName:string,
+    description: string,
+    desination: string,
+    placeHolderImage: string,
+    videourl: string,
+    status: boolean,
+    createdAt: string,
+    updatedAt: string
+   
+}
+
+
+type TestimonialApiResponse = {
+  success: boolean,
+  data: Testimonial,
+  message:string
+
+}
+
 // Infer type for better type-safety
 type TestimonialInput = z.infer<typeof testimonialSchema>;
 
@@ -101,7 +122,7 @@ export default async function testimonialAction(
     const parsed = await testimonialSchema.parseAsync(data);
 
     // 3. Send to API (only valid data reaches here)
-    const response = await postForm("/api/testimonial/create", formData);
+    const response:TestimonialApiResponse = await postForm("/api/testimonial/create", formData);
 
     if (!response?.success) {
       throw new Error(response?.message || "API returned failure");
