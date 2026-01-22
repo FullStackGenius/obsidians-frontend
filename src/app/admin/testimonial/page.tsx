@@ -4,6 +4,7 @@ import AdminLayout from '../components/AdminLayout';
 import MainAppContentHeader from '../components/MainAppContentHeader';
 import testimonialAction from './testimonial.action';
 import clientFetch from '../../../lib/api/clientFetch';
+import Link from 'next/link';
 
 type Testimonials = {
   _id: string;
@@ -49,7 +50,7 @@ const page = () => {
     const getTestimonials = async () => {
       try {
         const response = await clientFetch<any>("/api/testimonial/all-testimonials");
-        console.log(response)
+        // console.log(response)
         setTestimonial(response.data.testimonials);
       } catch (err) {
         console.error("Failed to load profile:", err);
@@ -58,9 +59,19 @@ const page = () => {
     getTestimonials();
   }, [isPending]);
 
-  const handleDelete = (id) => {
-    console.log(id)
-  }
+  const handleDelete = async (testimonialId: string) => {
+    if (!confirm("Are you sure you want to delete this logo?")) return;
+    const testimonialLogos = [...getTestimonial];
+    setTestimonial(getTestimonial.filter((testimonial: any) => testimonial._id !== testimonialId));
+    try {
+      await clientFetch(`/api/testimonial/delete/${testimonialId}`, {
+        method: "DELETE",
+      });
+    } catch (err: any) {
+      setTestimonial(testimonialLogos);
+      alert(err?.message || "Could not delete logo");
+    }
+  };
 
   return (
     <>
@@ -236,8 +247,14 @@ const page = () => {
 
 
                               <td>
-                                <button className='btn btn-danger' onClick={() => handleDelete(testimonial._id)}>Delete</button>
-                                <button className='btn btn-primary' onClick={() => handleDelete(testimonial._id)}>Edit</button>
+                                <button className='btn btn-danger ms-3' onClick={() => handleDelete(testimonial._id)}>Delete</button>
+                                {/* <Link href="/admin" className='btn btn-primary'>Edit</Link> */}
+                                <Link
+                                  href={`/admin/testimonial/${testimonial._id}/edit`}
+                                  className="btn btn-primary"
+                                >
+                                  Edit
+                                </Link>
                               </td>
                             </tr>
                           );
