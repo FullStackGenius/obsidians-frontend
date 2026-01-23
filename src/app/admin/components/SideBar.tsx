@@ -52,22 +52,22 @@ const SideBar = () => {
                 <p>Testimonial</p>
               </Link>
             </li>
-            {/* <li className="nav-item menu-open">
-              <a href="#" className="nav-link active">
+            <li className="nav-item menu-open">
+              <Link href="/admin/home/banner" className="nav-link active">
                 <i className="nav-icon bi bi-speedometer"></i>
                 <p>
-                  Dashboard
+                  Mange Home
                   <i className="nav-arrow bi bi-chevron-right"></i>
                 </p>
-              </a>
+              </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="./index.html" className="nav-link active">
+                  <Link href="/admin/home/banner" className="nav-link active">
                     <i className="nav-icon bi bi-circle"></i>
-                    <p>Dashboard v1</p>
-                  </a>
+                    <p>Banner</p>
+                  </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a href="./index2.html" className="nav-link">
                     <i className="nav-icon bi bi-circle"></i>
                     <p>Dashboard v2</p>
@@ -78,10 +78,10 @@ const SideBar = () => {
                     <i className="nav-icon bi bi-circle"></i>
                     <p>Dashboard v3</p>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a href="./generate/theme.html" className="nav-link">
                 <i className="nav-icon bi bi-palette"></i>
                 <p>Theme Generate</p>

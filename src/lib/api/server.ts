@@ -48,12 +48,12 @@ export async function apiServer<T>(
   };
 
   // 🔹 Debug safely (no confusion)
-  console.log("REQUEST →", {
-    url,
-    method,
-    headers: Object.fromEntries(headers.entries()),
-  });
-  console.log(config);
+  // console.log("REQUEST →", {
+  //   url,
+  //   method,
+  //   headers: Object.fromEntries(headers.entries()),
+  // });
+  // console.log(config);
   const response = await fetch(url, config);
 
   if (!response.ok) {
