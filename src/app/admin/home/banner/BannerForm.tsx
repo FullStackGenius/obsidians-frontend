@@ -11,7 +11,7 @@ const BanerForm: React.FC<any> = (props) => {
     errors: {},
   });
 
-// console.log(state,'--state--')
+  console.log(state.fieldValues, '--state--')
   return (
     <AdminLayout>
 
@@ -38,28 +38,28 @@ const BanerForm: React.FC<any> = (props) => {
 
                     {/* General error */}
                     {state.errors?._general && (
-                        <div className="alert alert-danger">{state.errors._general}</div>
-                      )}
+                      <div className="alert alert-danger">{state.errors._general}</div>
+                    )}
 
-                      {state.success && (
-                        <div className="alert alert-success">{state.message}</div>
-                      )}
+                    {state.success && (
+                      <div className="alert alert-success">{state.message}</div>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor="welcomeText" className="form-label">Welcome Text</label>
                       <input
                         type="text"
-                          className={`form-control ${state.errors?.welcomeText ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.welcomeText ? "is-invalid" : ""}`}
                         // className="form-control"
                         id="welcomeText"
                         name="welcomeText"
-                        //   defaultValue={state.fieldValues?.clinetName}
-                        defaultValue={props.getHomeBannerContentData.heroSection.welcomeText}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.welcomeText ?? props.getHomeBannerContentData.heroSection.welcomeText}
+                      // defaultValue={props.getHomeBannerContentData.heroSection.welcomeText}
+                      // required
                       />
                       {state.errors?.welcomeText && (
-                          <div className="invalid-feedback">{state.errors.welcomeText}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.welcomeText}</div>
+                      )}
                     </div>
 
 
@@ -67,7 +67,7 @@ const BanerForm: React.FC<any> = (props) => {
                       type="hidden"
                       name="id"
                       defaultValue={props.getHomeBannerContentData._id}
-                      // required
+                    // required
                     />
 
 
@@ -76,65 +76,65 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.brandName ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.brandName ? "is-invalid" : ""}`}
                         id="brandName"
                         name="brandName"
-                        defaultValue={props.getHomeBannerContentData.heroSection.brandName}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.brandName ?? props.getHomeBannerContentData.heroSection.brandName}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.brandName && (
-                          <div className="invalid-feedback">{state.errors.brandName}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.brandName}</div>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label htmlFor="mainHeading" className="form-label">Main Heading</label>
                       <input
                         type="text"
-                          className={`form-control ${state.errors?.mainHeading ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.mainHeading ? "is-invalid" : ""}`}
                         // className="form-control"
                         id="mainHeading"
                         name="mainHeading"
                         //   defaultValue={state.fieldValues?.clinetName}
-                        defaultValue={props.getHomeBannerContentData.heroSection.mainHeading}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.mainHeading ?? props.getHomeBannerContentData.heroSection.mainHeading}
+                      // required
                       />
                       {state.errors?.mainHeading && (
-                          <div className="invalid-feedback">{state.errors.mainHeading}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.mainHeading}</div>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label htmlFor="highlightedText" className="form-label">Highlighted Text *</label>
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.highlightedText ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.highlightedText ? "is-invalid" : ""}`}
                         id="highlightedText"
                         name="highlightedText"
-                        defaultValue={props.getHomeBannerContentData.heroSection.highlightedText}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.highlightedText ?? props.getHomeBannerContentData.heroSection.highlightedText}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.highlightedText && (
-                          <div className="invalid-feedback">{state.errors.highlightedText}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.highlightedText}</div>
+                      )}
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="description" className="form-label">Description *</label>
                       <textarea
                         // className="form-control"
-                          className={`form-control ${state.errors?.description ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.description ? "is-invalid" : ""}`}
                         id="description"
                         name="description"
                         rows={4}
-                        defaultValue={props.getHomeBannerContentData.heroSection.description}
-                        //   defaultValue={state.fieldValues?.description}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.description ?? props.getHomeBannerContentData.heroSection.description}
+                      //   defaultValue={state.fieldValues?.description}
+                      // required
                       />
                       {state.errors?.description && (
-                          <div className="invalid-feedback">{state.errors.description}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.description}</div>
+                      )}
                     </div>
 
 
@@ -143,16 +143,16 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.primaryButtonText ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.primaryButtonText ? "is-invalid" : ""}`}
                         id="primaryButtonText"
                         name="primaryButtonText"
-                        defaultValue={props.getHomeBannerContentData.heroSection.primaryButton.text}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.primaryButton.text ?? props.getHomeBannerContentData.heroSection.primaryButton.text}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.primaryButtonText && (
-                          <div className="invalid-feedback">{state.errors.primaryButtonText}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.primaryButtonText}</div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -160,16 +160,16 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.primaryButtonLink ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.primaryButtonLink ? "is-invalid" : ""}`}
                         id="primaryButtonLink"
                         name="primaryButtonLink"
-                        defaultValue={props.getHomeBannerContentData.heroSection.primaryButton.link}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.primaryButton.link ?? props.getHomeBannerContentData.heroSection.primaryButton.link}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.primaryButtonLink && (
-                          <div className="invalid-feedback">{state.errors.primaryButtonLink}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.primaryButtonLink}</div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -177,16 +177,16 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.scrollDownText ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.scrollDownText ? "is-invalid" : ""}`}
                         id="scrollDownText"
                         name="scrollDownText"
-                        defaultValue={props.getHomeBannerContentData.heroSection.scrollDown.text}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.scrollDown.text ?? props.getHomeBannerContentData.heroSection.scrollDown.text}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.scrollDownText && (
-                          <div className="invalid-feedback">{state.errors.scrollDownText}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.scrollDownText}</div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -194,16 +194,16 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="text"
                         // className="form-control"
-                          className={`form-control ${state.errors?.scrollDownTargetId ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.scrollDownTargetId ? "is-invalid" : ""}`}
                         id="scrollDownTargetId"
                         name="scrollDownTargetId"
-                        defaultValue={props.getHomeBannerContentData.heroSection.scrollDown.targetId}
-                        //   defaultValue={state.fieldValues?.desination}
-                        // required
+                        defaultValue={state.fieldValues?.heroSection.scrollDown.targetId ?? props.getHomeBannerContentData.heroSection.scrollDown.targetId}
+                      //   defaultValue={state.fieldValues?.desination}
+                      // required
                       />
                       {state.errors?.scrollDownTargetId && (
-                          <div className="invalid-feedback">{state.errors.scrollDownTargetId}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.scrollDownTargetId}</div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -213,37 +213,37 @@ const BanerForm: React.FC<any> = (props) => {
                       <input
                         type="file"
                         // className="form-control"
-                          className={`form-control ${state.errors?.bannerImage ? "is-invalid" : ""}`}
+                        className={`form-control ${state.errors?.bannerImage ? "is-invalid" : ""}`}
                         id="bannerImage"
                         name="bannerImage"
                         accept="image/jpeg,image/png,image/webp"
                       // required
                       />
                       {state.errors?.bannerImage && (
-                          <div className="invalid-feedback">{state.errors.bannerImage}</div>
-                        )}
+                        <div className="invalid-feedback">{state.errors.bannerImage}</div>
+                      )}
                     </div>
 
 
                     <div className="row mb-3">
                       <label htmlFor="scrollDownTargetId" className="form-label">Expert Boxe 1</label>
                       <div className="col-3">
-                        <input type="text"  className={`form-control ${state.errors?.title ? "is-invalid" : ""}`} name="title1" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[0].title} placeholder="title 1" aria-label=".col-3" />
-                         {state.errors?.title && (
+                        <input type="text" className={`form-control ${state.errors?.title ? "is-invalid" : ""}`} name="title1" defaultValue={state.fieldValues?.heroSection.expertBoxes[0].title ?? props.getHomeBannerContentData.heroSection.expertBoxes[0].title} placeholder="title 1" aria-label=".col-3" />
+                        {state.errors?.title && (
                           <div className="invalid-feedback">{state.errors.title}</div>
                         )}
                       </div>
 
                       <div className="col-4">
-                        <input type="text"  className={`form-control ${state.errors?.subtitle1 ? "is-invalid" : ""}`} name="subtitle1" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[0].subtitle} placeholder="subtitle 1" aria-label=".col-4" />
-                         {state.errors?.subtitle1 && (
+                        <input type="text" className={`form-control ${state.errors?.subtitle1 ? "is-invalid" : ""}`} name="subtitle1" defaultValue={state.fieldValues?.heroSection.expertBoxes[0].subtitle ?? props.getHomeBannerContentData.heroSection.expertBoxes[0].subtitle} placeholder="subtitle 1" aria-label=".col-4" />
+                        {state.errors?.subtitle1 && (
                           <div className="invalid-feedback">{state.errors.subtitle1}</div>
                         )}
                       </div>
 
                       <div className="col-5">
-                        <input type="text"  className={`form-control ${state.errors?.description1 ? "is-invalid" : ""}`} name="description1" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[0].description} placeholder="description 1" aria-label=".col-5" />
-                         {state.errors?.description1 && (
+                        <input type="text" className={`form-control ${state.errors?.description1 ? "is-invalid" : ""}`} name="description1" defaultValue={state.fieldValues?.heroSection.expertBoxes[0].description ?? props.getHomeBannerContentData.heroSection.expertBoxes[0].description} placeholder="description 1" aria-label=".col-5" />
+                        {state.errors?.description1 && (
                           <div className="invalid-feedback">{state.errors.description1}</div>
                         )}
                       </div>
@@ -252,22 +252,22 @@ const BanerForm: React.FC<any> = (props) => {
                     <div className="row mb-3">
                       <label htmlFor="scrollDownTargetId" className="form-label">Expert Boxe 2</label>
                       <div className="col-3">
-                        <input type="text"  className={`form-control ${state.errors?.title2 ? "is-invalid" : ""}`} name="title2" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[1].title} placeholder="title 2" aria-label=".col-3" />
-                         {state.errors?.title2 && (
+                        <input type="text" className={`form-control ${state.errors?.title2 ? "is-invalid" : ""}`} name="title2" defaultValue={state.fieldValues?.heroSection.expertBoxes[1].title ?? props.getHomeBannerContentData.heroSection.expertBoxes[1].title} placeholder="title 2" aria-label=".col-3" />
+                        {state.errors?.title2 && (
                           <div className="invalid-feedback">{state.errors.title2}</div>
                         )}
                       </div>
 
                       <div className="col-4">
-                        <input type="text"  className={`form-control ${state.errors?.subtitle2 ? "is-invalid" : ""}`} name="subtitle2" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[1].subtitle} placeholder="subtitle 2" aria-label=".col-4" />
-                         {state.errors?.subtitle2 && (
+                        <input type="text" className={`form-control ${state.errors?.subtitle2 ? "is-invalid" : ""}`} name="subtitle2" defaultValue={state.fieldValues?.heroSection.expertBoxes[1].subtitle ?? props.getHomeBannerContentData.heroSection.expertBoxes[1].subtitle} placeholder="subtitle 2" aria-label=".col-4" />
+                        {state.errors?.subtitle2 && (
                           <div className="invalid-feedback">{state.errors.subtitle2}</div>
                         )}
                       </div>
 
                       <div className="col-5">
-                        <input type="text"  className={`form-control ${state.errors?.description2 ? "is-invalid" : ""}`} name="description2" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[1].description} placeholder="description 2" aria-label=".col-5" />
-                         {state.errors?.description2 && (
+                        <input type="text" className={`form-control ${state.errors?.description2 ? "is-invalid" : ""}`} name="description2" defaultValue={state.fieldValues?.heroSection.expertBoxes[1].description ?? props.getHomeBannerContentData.heroSection.expertBoxes[1].description} placeholder="description 2" aria-label=".col-5" />
+                        {state.errors?.description2 && (
                           <div className="invalid-feedback">{state.errors.description2}</div>
                         )}
                       </div>
@@ -279,22 +279,22 @@ const BanerForm: React.FC<any> = (props) => {
                     <div className="row">
                       <label htmlFor="scrollDownTargetId" className="form-label">Expert Boxe 3</label>
                       <div className="col-3">
-                        <input type="text"  className={`form-control ${state.errors?.title3 ? "is-invalid" : ""}`} name="title3" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[2].title} placeholder="title 3" aria-label=".col-3" />
-                         {state.errors?.title3 && (
+                        <input type="text" className={`form-control ${state.errors?.title3 ? "is-invalid" : ""}`} name="title3" defaultValue={state.fieldValues?.heroSection.expertBoxes[2].title ?? props.getHomeBannerContentData.heroSection.expertBoxes[2].title} placeholder="title 3" aria-label=".col-3" />
+                        {state.errors?.title3 && (
                           <div className="invalid-feedback">{state.errors.title3}</div>
                         )}
                       </div>
 
                       <div className="col-4">
-                        <input type="text"  className={`form-control ${state.errors?.subtitle3 ? "is-invalid" : ""}`} name="subtitle3" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[2].subtitle} placeholder="subtitle 3" aria-label=".col-4" />
-                         {state.errors?.subtitle3 && (
+                        <input type="text" className={`form-control ${state.errors?.subtitle3 ? "is-invalid" : ""}`} name="subtitle3" defaultValue={state.fieldValues?.heroSection.expertBoxes[2].subtitle ?? props.getHomeBannerContentData.heroSection.expertBoxes[2].subtitle} placeholder="subtitle 3" aria-label=".col-4" />
+                        {state.errors?.subtitle3 && (
                           <div className="invalid-feedback">{state.errors.subtitle3}</div>
                         )}
                       </div>
 
                       <div className="col-5">
-                        <input type="text"  className={`form-control ${state.errors?.description3 ? "is-invalid" : ""}`} name="description3" defaultValue={props.getHomeBannerContentData.heroSection.expertBoxes[2].description} placeholder="description 3" aria-label=".col-5" />
-                         {state.errors?.description3 && (
+                        <input type="text" className={`form-control ${state.errors?.description3 ? "is-invalid" : ""}`} name="description3" defaultValue={state.fieldValues?.heroSection.expertBoxes[2].description ?? props.getHomeBannerContentData.heroSection.expertBoxes[2].description} placeholder="description 3" aria-label=".col-5" />
+                        {state.errors?.description3 && (
                           <div className="invalid-feedback">{state.errors.description3}</div>
                         )}
                       </div>
@@ -313,9 +313,9 @@ const BanerForm: React.FC<any> = (props) => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                    disabled={isPending}
+                      disabled={isPending}
                     >
-                      
+
                       {isPending ? "Saving..." : "Save"}
                     </button>
                   </div>

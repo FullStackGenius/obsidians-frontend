@@ -55,7 +55,7 @@ export type ActionState = {
   success?: boolean;
   message?: string;
   errors?: Record<string, string>; // ← better UX than string[]
-  fieldValues?: Partial<EditInput>;
+  fieldValues?: any;
   //fieldValues?: Partial<TestimonialInput & { [key: string]: any }>; // for repopulating form
 };
 
@@ -104,6 +104,7 @@ export default async function bannerFormAction(
 
     return {
       success: true,
+      fieldValues:response.data,
       message: "Testimonial created successfully!",
     };
   } catch (error) {

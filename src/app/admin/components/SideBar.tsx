@@ -67,6 +67,12 @@ const SideBar = () => {
                     <p>Banner</p>
                   </Link>
                 </li>
+                 <li className="nav-item">
+                  <Link href="/admin/home/about-section" className="nav-link active">
+                    <i className="nav-icon bi bi-circle"></i>
+                    <p>About Section</p>
+                  </Link>
+                </li>
                 {/* <li className="nav-item">
                   <a href="./index2.html" className="nav-link">
                     <i className="nav-icon bi bi-circle"></i>
