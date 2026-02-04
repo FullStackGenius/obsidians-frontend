@@ -15,9 +15,7 @@ const updateBannerSchema = z.object({
   contentImage: z
     .any()
     .refine(
-      (file) =>
-         !file || file.size === 0 || 
-      file.size <= 5 * 1024 * 1024,
+      (file) => !file || file.size === 0 || file.size <= 5 * 1024 * 1024,
       "Image must be under 5MB",
     )
     .refine(
@@ -30,9 +28,7 @@ const updateBannerSchema = z.object({
   sideImage: z
     .any()
     .refine(
-      (file) => 
-        !file || file.size === 0 || 
-      file.size <= 5 * 1024 * 1024,
+      (file) => !file || file.size === 0 || file.size <= 5 * 1024 * 1024,
       "Image must be under 5MB",
     )
     .refine(
@@ -45,9 +41,7 @@ const updateBannerSchema = z.object({
   buttonIcon: z
     .any()
     .refine(
-      (file) =>
-         !file || file.size === 0 || 
-      file.size <= 5 * 1024 * 1024,
+      (file) => !file || file.size === 0 || file.size <= 5 * 1024 * 1024,
       "Image must be under 5MB",
     )
     .refine(
@@ -60,9 +54,7 @@ const updateBannerSchema = z.object({
   platformIcon: z
     .any()
     .refine(
-      (file) => 
-        !file || file.size === 0 || 
-      file.size <= 5 * 1024 * 1024,
+      (file) => !file || file.size === 0 || file.size <= 5 * 1024 * 1024,
       "Image must be under 5MB",
     )
     .refine(
@@ -75,9 +67,7 @@ const updateBannerSchema = z.object({
   reviewImages: z
     .any()
     .refine(
-      (file) =>
-         !file || file.size === 0 || 
-      file.size <= 5 * 1024 * 1024,
+      (file) => !file || file.size === 0 || file.size <= 5 * 1024 * 1024,
       "Image must be under 5MB",
     )
     .refine(
@@ -102,7 +92,7 @@ export default async function aboutSectionSubmission(
   formData: FormData,
 ): Promise<ActionState> {
   try {
-    console.log("formData", formData);
+    // console.log("formData", formData);
     const data = {
       id: formData.get("id") as string,
       headingTitle: formData.get("headingTitle") as string,
@@ -122,21 +112,21 @@ export default async function aboutSectionSubmission(
     /* 2️⃣ Validate */
     await updateBannerSchema.parseAsync(data);
 
-    // // // 3. Send to API (only valid data reaches here)
-    // const response: any = await postForm(
-    //   "/api/home-content/banner-update",
-    //   formData,
-    // );
+    // // 3. Send to API (only valid data reaches here)
+    const response: any = await postForm(
+      "/api/home-content/about-update",
+      formData,
+    );
     // console.log(response, "response");
 
-    // if (!response?.success) {
-    //   throw new Error(response?.message || "API returned failure");
-    // }
+    if (!response?.success) {
+      throw new Error(response?.message || "API returned failure");
+    }
 
     return {
       success: true,
-      //fieldValues:response.data,
-      message: "Testimonial created successfully!",
+      fieldValues: response.data,
+      message: "about update created successfully!",
     };
   } catch (error) {
     console.error("Create testimonial error:", error);
@@ -147,6 +137,7 @@ export default async function aboutSectionSubmission(
       const flattened = z.flattenError(error); // ← this is the direct replacement for .flatten()
 
       const fieldErrors = flattened.fieldErrors;
+      console.log(fieldErrors);
       return {
         success: false,
         errors: Object.fromEntries(
@@ -171,11 +162,6 @@ export default async function aboutSectionSubmission(
           sideImage: formData.get("sideImage")?.toString(),
           buttonIcon: formData.get("buttonIcon")?.toString(),
           platformIcon: formData.get("platformIcon")?.toString(),
-          // title3: formData.get("title3")?.toString(),
-          // subtitle3: formData.get("subtitle3")?.toString(),
-          // description3: formData.get("description3")?.toString(),
-          // scrollDownText: formData.get("scrollDownText")?.toString(),
-          // scrollDownTargetId: formData.get("scrollDownTargetId")?.toString(),
         },
       };
     }

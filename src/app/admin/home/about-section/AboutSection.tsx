@@ -7,12 +7,14 @@ import aboutSectionSubmission from './aboutSection.action'
 
 const AboutSection: React.FC<any> = (props) => {
   const { getHomeAboutSectionData } = props;
+  // console.log(getHomeAboutSectionData,'getHomeAboutSectionData');
+  console.log(getHomeAboutSectionData.aboutSection.reviews.reviewImages, 'reviewImage');
   const [state, formAction, isPending] = useActionState(
     aboutSectionSubmission,
     { errors: {} }
   );
-console.log(state,'state')
-
+  console.log(state, 'state')
+  const [reviewImages, setReviewImage] = useState(getHomeAboutSectionData.aboutSection.reviews.reviewImages)
   const [inputs, setInputs] = useState([0]);
   const [previews, setPreviews] = useState({});
 
@@ -41,6 +43,30 @@ console.log(state,'state')
       return copy;
     });
   };
+
+
+  const handleDeleteReviewImage = async (image, index) => {
+  if (!window.confirm("Are you sure you want to delete this image?")) return;
+
+  // try {
+  //   await fetch("/api/delete-review-image", {
+  //     method: "POST", // or DELETE
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ image }),
+  //   });
+
+  //   // UI se remove
+  //   setReviewImages((prev) =>
+  //     prev.filter((_, i) => i !== index)
+  //   );
+  // } catch (error) {
+  //   console.error(error);
+  //   alert("Image delete failed");
+  // }
+};
+
   // console.log(getHomeAboutSectionData, "test");
   return (
     <AdminLayout>
@@ -63,10 +89,14 @@ console.log(state,'state')
 
               <div className="card-body">
                 {state.errors?._general && (
-                                    <div className="alert alert-danger mb-3">
-                                        {state.errors._general}
-                                    </div>
-                                )}
+                  <div className="alert alert-danger mb-3">
+                    {state.errors._general}
+                  </div>
+                )}
+
+                {state.success && (
+                  <div className="alert alert-success">{state.message}</div>
+                )}
 
                 <div className="mb-3">
                   <label className="form-label">Heading title</label>
@@ -74,16 +104,16 @@ console.log(state,'state')
                     type="text"
                     name="headingTitle"
                     className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.heading.title}
-                    // defaultValue={state.data?.clientName ?? clientName}
-                    // className={`form-control ${state.errors?.clientName ? "is-invalid" : ""}`}
-                    // required
+                    defaultValue={state?.fieldValues?.heading?.title ?? getHomeAboutSectionData.aboutSection.heading.title}
+                  // defaultValue={state.data?.clientName ?? clientName}
+                  // className={`form-control ${state.errors?.clientName ? "is-invalid" : ""}`}
+                  // required
                   />
                   {state.errors?.headingTitle && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.headingTitle}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.headingTitle}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -92,25 +122,25 @@ console.log(state,'state')
                     type="text"
                     name="headingHighlightedText"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.heading.highlightedText}
+                    defaultValue={state?.fieldValues?.heading?.highlightedText ?? getHomeAboutSectionData.aboutSection.heading.highlightedText}
                     // defaultValue={state.data?.desination ?? desination}
                     className={`form-control ${state.errors?.headingHighlightedText ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.headingHighlightedText && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.headingHighlightedText}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.headingHighlightedText}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
                   <label className="form-label">Content Image</label>
-                  {/* {placeHolderImage && (
-                                        <div className="mb-2">
-                                            <img src={placeHolderImage} alt="Current" width={120} />
-                                        </div>
-                                    )} */}
+                  {getHomeAboutSectionData.aboutSection.contentImage && (
+                    <div className="mb-2">
+                      <img src={getHomeAboutSectionData.ImageBasePath + getHomeAboutSectionData.aboutSection.contentImage} alt="Current" width={120} />
+                    </div>
+                  )}
                   <input
                     type="file"
                     name="contentImage"
@@ -119,10 +149,10 @@ console.log(state,'state')
                     accept="image/jpeg,image/png,image/webp"
                   />
                   {state.errors?.contentImage && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.contentImage}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.contentImage}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -130,26 +160,26 @@ console.log(state,'state')
                   <textarea
                     name="description"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.description}
+                    defaultValue={state?.fieldValues?.description ?? getHomeAboutSectionData.aboutSection.description}
                     // defaultValue={state.data?.description ?? description}
                     rows={4}
                     className={`form-control ${state.errors?.description ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.description && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.description}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.description}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
                   <label className="form-label">Side Image</label>
-                  {/* {placeHolderImage && (
-                                        <div className="mb-2">
-                                            <img src={placeHolderImage} alt="Current" width={120} />
-                                        </div>
-                                    )} */}
+                  {getHomeAboutSectionData.aboutSection.sideImage && (
+                    <div className="mb-2">
+                      <img src={getHomeAboutSectionData.ImageBasePath + getHomeAboutSectionData.aboutSection.sideImage} alt="Current" width={120} />
+                    </div>
+                  )}
                   <input
                     type="file"
                     name="sideImage"
@@ -158,10 +188,10 @@ console.log(state,'state')
                     accept="image/jpeg,image/png,image/webp"
                   />
                   {state.errors?.sideImage && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.sideImage}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.sideImage}
+                    </div>
+                  )}
                 </div>
 
 
@@ -171,16 +201,16 @@ console.log(state,'state')
                     type="text"
                     name="buttonText"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.button.text}
+                    defaultValue={state?.fieldValues?.button.text ?? getHomeAboutSectionData.aboutSection.button.text}
                     // defaultValue={state.data?.clientName ?? clientName}
                     className={`form-control ${state.errors?.buttonText ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.buttonText && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.buttonText}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.buttonText}
+                    </div>
+                  )}
                 </div>
 
 
@@ -190,27 +220,27 @@ console.log(state,'state')
                     type="text"
                     name="buttonLink"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.button.link}
+                    defaultValue={state?.fieldValues?.button.link ?? getHomeAboutSectionData.aboutSection.button.link}
                     // defaultValue={state.data?.clientName ?? clientName}
                     className={`form-control ${state.errors?.buttonLink ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.buttonLink && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.buttonLink}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.buttonLink}
+                    </div>
+                  )}
                 </div>
 
 
                 {/* Image */}
                 <div className="mb-3">
                   <label className="form-label">Button Icon</label>
-                  {/* {placeHolderImage && (
-                                        <div className="mb-2">
-                                            <img src={placeHolderImage} alt="Current" width={120} />
-                                        </div>
-                                    )} */}
+                  {getHomeAboutSectionData.aboutSection.button.icon && (
+                    <div className="mb-2">
+                      <img src={getHomeAboutSectionData.ImageBasePath + getHomeAboutSectionData.aboutSection.button.icon} alt="Current" width={120} />
+                    </div>
+                  )}
                   <input
                     type="file"
                     name="buttonIcon"
@@ -233,16 +263,16 @@ console.log(state,'state')
                     type="text"
                     name="reviewsRating"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.reviews.rating}
+                    defaultValue={state?.fieldValues?.reviews.rating ?? getHomeAboutSectionData.aboutSection.reviews.rating}
                     // defaultValue={state.data?.clientName ?? clientName}
-                     className={`form-control ${state.errors?.reviewsRating ? "is-invalid" : ""}`}
-                    // required
+                    className={`form-control ${state.errors?.reviewsRating ? "is-invalid" : ""}`}
+                  // required
                   />
                   {state.errors?.reviewsRating && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.reviewsRating}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.reviewsRating}
+                    </div>
+                  )}
                 </div>
 
 
@@ -252,16 +282,16 @@ console.log(state,'state')
                     type="text"
                     name="reviewsLable"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.reviews.label}
+                    defaultValue={state?.fieldValues?.reviews.label ?? getHomeAboutSectionData.aboutSection.reviews.label}
                     // defaultValue={state.data?.clientName ?? clientName}
                     className={`form-control ${state.errors?.reviewsLable ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.reviewsLable && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.reviewsLable}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.reviewsLable}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -270,26 +300,26 @@ console.log(state,'state')
                     type="text"
                     name="reviewsPlatform"
                     // className="form-control"
-                    defaultValue={getHomeAboutSectionData.aboutSection.reviews.platform}
+                    defaultValue={state?.fieldValues?.reviews.platform ?? getHomeAboutSectionData.aboutSection.reviews.platform}
                     // defaultValue={state.data?.clientName ?? clientName}
                     className={`form-control ${state.errors?.reviewsPlatform ? "is-invalid" : ""}`}
-                    // required
+                  // required
                   />
                   {state.errors?.reviewsPlatform && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.reviewsPlatform}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.reviewsPlatform}
+                    </div>
+                  )}
                 </div>
 
                 {/* Image */}
                 <div className="mb-3">
                   <label className="form-label">Platform Icon</label>
-                  {/* {placeHolderImage && (
-                                        <div className="mb-2">
-                                            <img src={placeHolderImage} alt="Current" width={120} />
-                                        </div>
-                                    )} */}
+                  {getHomeAboutSectionData.aboutSection.reviews.platformIcon && (
+                    <div className="mb-2">
+                      <img src={getHomeAboutSectionData.ImageBasePath + getHomeAboutSectionData.aboutSection.reviews.platformIcon} alt="Current" width={120} />
+                    </div>
+                  )}
                   <input
                     type="file"
                     name="platformIcon"
@@ -298,16 +328,15 @@ console.log(state,'state')
                     accept="image/jpeg,image/png,image/webp"
                   />
                   {state.errors?.platformIcon && (
-                                        <div className="invalid-feedback d-block">
-                                            {state.errors.platformIcon}
-                                        </div>
-                                    )}
+                    <div className="invalid-feedback d-block">
+                      {state.errors.platformIcon}
+                    </div>
+                  )}
                 </div>
 
-              
+
                 <div className="mb-3">
                   <label className="form-label">Review Images</label>
-
                   {inputs.map((id, index) => (
                     <div key={id} className="mb-3 border p-2 rounded">
                       {/* Preview */}
@@ -343,7 +372,39 @@ console.log(state,'state')
                     + Add More
                   </button>
                 </div>
+ {/* {reviewImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={`${getHomeAboutSectionData.ImageBasePath}/${image}`}
+                      width={120}
+                      className="m-2"
+                      alt="review"
+                    />
+                  ))} */}
+                  {reviewImages.map((image, index) => (
+  <div key={index} className="position-relative d-inline-block m-2">
+    
+    <img
+      src={`${getHomeAboutSectionData.ImageBasePath}/${image}`}
+      width="120"
+      className="img-thumbnail"
+      alt="review"
+    />
 
+    {/* Delete Icon */}
+    <button
+      type="button"
+      className="btn btn-danger btn-sm position-absolute top-0 end-0 translate-middle rounded-circle"
+      onClick={() => handleDeleteReviewImage(image, index)}
+      title="Delete image"
+    >
+      &times;
+    </button>
+
+  </div>
+))}
+
+                  <br/>
                 {/* {state?.error && (
         <div className="text-danger mb-2">{state.error}</div>
       )} */}
