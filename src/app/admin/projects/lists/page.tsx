@@ -99,7 +99,7 @@ console.log(getProject)
                                 <button className='btn btn-danger ms-3' onClick={() => handleDelete(project._id)}>Delete</button>
                                 {/* <Link href="/admin" className='btn btn-primary'>Edit</Link> */}
                                 <Link
-                                  href={`/admin/testimonial/${project._id}/edit`}
+                                  href={`/admin/projects/${project._id}/edit`}
                                   className="btn btn-primary"
                                 >
                                   Edit
