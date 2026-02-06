@@ -31,17 +31,17 @@ const page = () => {
   }, []);
 
   const handleDelete = async (testimonialId: string) => {
-    if (!confirm("Are you sure you want to delete this logo?")) return;
-    const testimonialLogos = [...getTestimonial];
-    setTestimonial(getTestimonial.filter((testimonial: any) => testimonial._id !== testimonialId));
-    try {
-      await clientFetch(`/api/testimonial/delete/${testimonialId}`, {
-        method: "DELETE",
-      });
-    } catch (err: any) {
-      setTestimonial(testimonialLogos);
-      alert(err?.message || "Could not delete logo");
-    }
+    // if (!confirm("Are you sure you want to delete this logo?")) return;
+    // const testimonialLogos = [...getTestimonial];
+    // setTestimonial(getTestimonial.filter((testimonial: any) => testimonial._id !== testimonialId));
+    // try {
+    //   await clientFetch(`/api/testimonial/delete/${testimonialId}`, {
+    //     method: "DELETE",
+    //   });
+    // } catch (err: any) {
+    //   setTestimonial(testimonialLogos);
+    //   alert(err?.message || "Could not delete logo");
+    // }
   };
 console.log(getProject)
   return (
