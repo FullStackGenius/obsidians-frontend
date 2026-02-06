@@ -52,12 +52,12 @@ const SideBar = () => {
                 <p>Testimonial</p>
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link href="/admin/projects" className="nav-link">
                  <i className="nav-icon bi bi-speedometer"></i>
                 <p>Project</p>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item menu-open">
               <Link href="/admin/home/banner" className="nav-link active">
                 <i className="nav-icon bi bi-speedometer"></i>
@@ -77,6 +77,41 @@ const SideBar = () => {
                   <Link href="/admin/home/about-section" className="nav-link active">
                     <i className="nav-icon bi bi-circle"></i>
                     <p>About Section</p>
+                  </Link>
+                </li>
+                {/* <li className="nav-item">
+                  <a href="./index2.html" className="nav-link">
+                    <i className="nav-icon bi bi-circle"></i>
+                    <p>Dashboard v2</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="./index3.html" className="nav-link">
+                    <i className="nav-icon bi bi-circle"></i>
+                    <p>Dashboard v3</p>
+                  </a>
+                </li> */}
+              </ul>
+            </li>
+             <li className="nav-item menu-open">
+              <Link href="#" className="nav-link active">
+                <i className="nav-icon bi bi-speedometer"></i>
+                <p>
+                  Project
+                  <i className="nav-arrow bi bi-chevron-right"></i>
+                </p>
+              </Link>
+              <ul className="nav nav-treeview">
+                <li className="nav-item">
+                  <Link href="/admin/projects" className="nav-link active">
+                    <i className="nav-icon bi bi-circle"></i>
+                    <p>Add Project</p>
+                  </Link>
+                </li>
+                 <li className="nav-item">
+                  <Link href="/admin/projects/lists" className="nav-link active">
+                    <i className="nav-icon bi bi-circle"></i>
+                    <p>Project List</p>
                   </Link>
                 </li>
                 {/* <li className="nav-item">
